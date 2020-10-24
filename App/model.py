@@ -227,10 +227,10 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
         if histograma_fecha[llaves_fecha] == maximo_fecha:
             respuesta_fecha = llaves_fecha.index(maximo_fecha)
     
-    return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)\n
+    return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)+"\n"
             "La fecha con mayores accidentes es: "+str(respuesta_fecha))
 
-def getAccidentsByHour(analyzer, initialhour, finalhour):¿
+def getAccidentsByHour(analyzer, initialhour, finalhour): 
     lst = om.values(analyzer['dateIndex'])
     occurreddate = accident['Start_Time']
     accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')
