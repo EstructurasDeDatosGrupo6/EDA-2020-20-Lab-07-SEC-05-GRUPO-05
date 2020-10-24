@@ -211,20 +211,12 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
     histograma_fecha = {'Fecha':None,'accidents':None}
     
     iter = lit.newIterator(histograma_estado)
-
-def getAccidentsByState(analyzer,initialDate,finalDate): #REQUERIMIENTO 4
-    lst_rank= lt.newList(datastructure='SINGLE_LINKED',cmpfunction=None)
-    lst_keys= lt.newList(datastructure= 'SINGLE_LINKED',cmpfunction=None)
-    rango = getAccidentsByRange(analyzer['dateIndex'],initialDate,finalDate)
-    lt.addLast(lst_rank,rango)
-    histograma = m.newMap(numelements=1000,prime=109345121,maptype='CHAINING',loadfactor=0.5,comparefunction=compareaccidents)
-    iter = lit.newIterator(lst_rank)
     while lit.hasNext(iter):
         entry = lit.next(iter)
         if entry['State'] not in histograma_estado:
             histograma_estado['Estado'] = 1
         else:
-            histograma_estado['State'] += 1
+            histograma_estado['Estado'] += 1
     
     iter = lit.newIterator(histograma_fecha)
     while lit.hasNext(iter):
@@ -269,11 +261,14 @@ def getAccidentsBySeverity(analyzer, Date):
 
     return(accidents)
 
-def getAccidentsByHour(analyzer, initialhour, finalhour):
-    lst = om.values(analyzer['dateIndex'], initialhour, finalhour)
-    return lst
+def getAccidentsByHour(analyzer, initialhour, finalhour):¿
+    lst = om.values(analyzer['dateIndex'])
+    occurreddate = accident['Start_Time']
+    accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')
+    map_horas = om.newMap(omaptype='BST',comparefunction=compareHours)
+    om.put(map_horas,accidentdate.hour(),lst)
+    return om.values(map,initialhour,finalhour)
    
-            return 0 
 
 def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1 
 
@@ -313,17 +308,6 @@ def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENT
     iter=lit.newIterator(accidentdate)
     while lit.hasNext(iter):
         accidente= lit.next(iter)
-        
-        
-       
-    
-    
-  
-
-    
-    
-    
-    
 # ==============================
 # Funciones de Comparacion
 # ==============================
@@ -347,6 +331,14 @@ def compareDates(date1, date2):
     y entry una pareja llave-valor
     """
     if (date1 == date2):
+        return 0
+    elif (date1 > date2):
+        return 1
+    else:
+        return -1
+def compareHours(hour1,hour2):
+
+    if (hora1 == hora2):
         return 0
     elif (date1 > date2):
         return 1
