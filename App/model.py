@@ -187,22 +187,6 @@ def getAccidentsByRangeCode(analyzer, initialDate, severity):
             return m.size(me.getValue(numoffenses)['lstseverity'])
         return (numoffenses)
 
-def getAccidentsByDate(analyzer, Date):
-    
-    # offenses=om.get(analyzer['offenses'], )
-    accidentdate= om.get(analyzer['dateIndex'], Date)
-    # severity= om.get(analyzer, accidentdate['key'])
-    # print(accidentdate['key'])
-    # print(serveity['Severity'])
-    # if accidentdate['key'] is not None:
-    #     severitymap=me.getValue(accidentdate)['offenseIndex']
-    #     numaccidents= m.getValue(accidentdate)['severityIndex']
-    
-    #     if numaccidents is not None: 
-    #         return m.size(me.getValue(numaccidents['lstseverity']))
-    #     else:
-    #         return 0
-    return accidentdate
 
 def getAccidentsByState(analyzer,initialDate,finalDate):
     rango = om.values(initialDate,finalDate)
