@@ -261,7 +261,7 @@ def getAccidentsBySeverity(analyzer, Date):
 
     return(accidents)
 
-def getAccidentsByHour(analyzer, initialhour, finalhour):¿
+def getAccidentsByHour(analyzer, initialhour, finalhour):
     lst = om.values(analyzer['dateIndex'])
     occurreddate = accident['Start_Time']
     accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')

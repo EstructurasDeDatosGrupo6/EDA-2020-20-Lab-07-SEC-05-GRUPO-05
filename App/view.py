@@ -56,6 +56,8 @@ def printMenu():
     print("2- Cargar información de accidentes...")
     print("3- Requerimento 1")
     print("4- Requerimento 2")
+    print("6- Requerimento 4")
+    print("7- Requerimento 5")
     print("0- Salir")
     print("*******************************************")
 
@@ -95,7 +97,15 @@ while True:
         initialDate= input("Rango Inicial (YYYY-MM-DD): ")
         finalDate= input("Rango final (YYYY-MM-DD): ")
         resp= controller.getAccidentsByRangeSeverity(cont, initialDate, finalDate)
-        
+    elif int(inputs[0]) == 6:#REQUERIMIENTO 4
+        initialDate= input("Rango Inicial (YYYY-MM-DD): ")
+        finalDate= input("Rango final (YYYY-MM-DD): ")
+        resp = controller.getAccidentsByState(cont,initialDate,finalDate)
+        print(resp)
+    elif int(inputs[0]) == 7:
+        initialHour = input("Rango Inicial (HH:MM): ")
+        finalHour = input("Rango Final (HH:MM): ")
+        resp = controller.getAccidentsByHour(cont,initialHour,finalHour)
         print(resp)
 
     
