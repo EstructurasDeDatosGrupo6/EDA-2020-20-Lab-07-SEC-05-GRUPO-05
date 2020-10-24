@@ -188,7 +188,6 @@ def getAccidentsByRangeCode(analyzer, initialDate, severity):
             return m.size(me.getValue(numaccidents)['lstseverity'])
         return 0
 
-<<<<<<< HEAD
 def getAccidentsByDate(analyzer, Date):
     
     # offenses=om.get(analyzer['offenses'], )
@@ -207,34 +206,47 @@ def getAccidentsByDate(analyzer, Date):
     return accidentdate
 
 def getAccidentsByState(analyzer,initialDate,finalDate):
-    lst_rank= lt.newList(datastructure='SINGLE_LINKED',cmpfunction=None)
-    lst_keys= lt.newList(datastructure= 'SINGLE_LINKED',cmpfunction=None)
-    rango = getAccidentsByRange(analyzer['dateIndex'],initialDate,finalDate)
-    lt.addLast(lst_rank,rango)
-    histograma = m.newMap(numelements=1000,prime=109345121,maptype='CHAINING',loadfactor=0.5,comparefunction=compareaccidents)
-    iter = lit.newIterator(lst_rank)
+    rango = om.values(initialDate,finalDate)
+    
+    histograma_estado = {'Estado':None,'accidents':None}
+    
+    histograma_fecha = {'Fecha':None,'accidents':None}
+    
+    iter = lit.newIterator(histograma_estado)
     while lit.hasNext(iter):
         entry = lit.next(iter)
-        if entry['State'] not in histograma:
-            entry['State'] = 1
+        if entry['State'] not in histograma_estado:
+            histograma_estado['Estado'] = 1
         else:
-            entry['State'] += 1
-    maximo = max(m.valueSet(lst_rank))
-    keys = m.keySet(lst_rank)
-    lt.addLast(lst_keys,keys)
-    iter = lit.newIterator(lst_keys)
+            histograma_estado['State'] += 1
+    
+    iter = lit.newIterator(histograma_fecha)
     while lit.hasNext(iter):
-        key = lit.next(iter)
-        if key == maximo:
-            return maximo
+        date = lit.next(iter)
+        if date['dateIndex'] not in histograma_fecha:
+            histograma_fecha['Fecha'] = 1
         else: 
-            return 0
-    #Paso 1: completar la lista 
-    #Paso 2: Crear un histograma(mapa)-> k:estados v:#accidentes
-    #Paso 3: Encontrar el valor mayor 
-    #Paso 4: Buscar la lista más grande de accidentes->fecha 
-    #Paso 5: Retornar el valor mayor del histograma y la fecha 
-=======
+            histograma_fecha['Fecha'] += 1
+
+    maximo_estado = max(histograma_estado.values)
+    llaves_estado = list(histograma_estado.keys)
+    iter = lit.newIterator(llaves_estado)
+    while lit.hasNext(iter):
+        state = lit.next(iter)
+        if histograma_estado[llaves_estado] == maximo_estado:
+            respuesta_estado = llaves_estado.index(maximo_estado)
+    
+    maximo_fecha = max(histograma_fecha.values)
+    llaves_fecha = list(histograma_fecha.keys)
+    iter = lit.newIterator(llaves_estado)
+    while lit.hasNext(iter):
+        fecha = lit.next(iter)
+        if histograma_fecha[llaves_fecha] == maximo_fecha:
+            respuesta_fecha = llaves_fecha.index(maximo_fecha)
+    
+    return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)\n
+            "La fecha con mayores accidentes es: "+str(respuesta_fecha))
+
 def getAccidentsBySeverity(analyzer, Date):
 
     severityCodes=lt.newList(datastructure="SINGLE_LINKED", cmpfunction=None)
@@ -250,8 +262,11 @@ def getAccidentsBySeverity(analyzer, Date):
         lt.addLast(accidents,severity)
 
     return(accidents)
+
+def getAccidentsByRange(analyzer, initialhour, finalhour):
+    lst = om.values(analyzer['dateIndex'], initialhour, finalhour)
+    return lst
    
->>>>>>> 5026b7f6f1b80225ba3acdbb1f41016d52060f44
 
 
 # ==============================
