@@ -230,7 +230,27 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
     return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)+"\n"
             "La fecha con mayores accidentes es: "+str(respuesta_fecha))
 
+<<<<<<< HEAD
+def getAccidentsBySeverity(analyzer, Date):
+
+    severityCodes=lt.newList(datastructure="SINGLE_LINKED", cmpfunction=None)
+    lt.addLast(severityCodes, 1)
+    lt.addLast(severityCodes, 2)
+    lt.addLast(severityCodes, 3)
+    lt.addLast(severityCodes, 4)
+
+    accidents=lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None)
+
+    for severityCode in severityCodes:
+        severity= getAccidentsByRangeCode(analyzer, Date, severityCode)
+        lt.addLast(accidents,severity)
+
+    return(accidents)
+
+def getAccidentsByHour(analyzer, initialhour, finalhour):
+=======
 def getAccidentsByHour(analyzer, initialhour, finalhour): 
+>>>>>>> e94e4f615b316773a300d5d0bbb923ce0634218a
     lst = om.values(analyzer['dateIndex'])
     occurreddate = accident['Start_Time']
     accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')
