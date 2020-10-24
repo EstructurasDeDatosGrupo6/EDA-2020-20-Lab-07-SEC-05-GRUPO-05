@@ -56,6 +56,9 @@ def printMenu():
     print("2- Cargar información de accidentes...")
     print("3- Requerimento 1")
     print("4- Requerimento 2")
+    print("5- Requerimento 3")
+    print("6- Requerimento 4")
+    print("7- Requerimento 5")
     print("0- Salir")
     print("*******************************************")
 

@@ -246,22 +246,6 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
     return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)\n
             "La fecha con mayores accidentes es: "+str(respuesta_fecha))
 
-def getAccidentsBySeverity(analyzer, Date):
-
-    severityCodes=lt.newList(datastructure="SINGLE_LINKED", cmpfunction=None)
-    lt.addLast(severityCodes, 1)
-    lt.addLast(severityCodes, 2)
-    lt.addLast(severityCodes, 3)
-    lt.addLast(severityCodes, 4)
-
-    accidents=lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None)
-
-    for severityCode in severityCodes:
-        severity= getAccidentsByRangeCode(analyzer, Date, severityCode)
-        lt.addLast(accidents,severity)
-
-    return(accidents)
-
 def getAccidentsByHour(analyzer, initialhour, finalhour):¿
     lst = om.values(analyzer['dateIndex'])
     occurreddate = accident['Start_Time']
@@ -304,7 +288,6 @@ def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1
 def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENTO 3
     accidentdate=getAccidentsByRange(analyzer, initialDate, finalDate)
     
-<<<<<<< HEAD
     i=0
     tamanio= lt.size(accidentdate)
     j=1
@@ -355,11 +338,6 @@ def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENT
     
     
     
-=======
-    iter=lit.newIterator(accidentdate)
-    while lit.hasNext(iter):
-        accidente= lit.next(iter)
->>>>>>> 778f6f1d0d31727fec35f53167dc89cd96a6855a
 # ==============================
 # Funciones de Comparacion
 # ==============================
