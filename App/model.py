@@ -187,35 +187,89 @@ def getAccidentsByRangeCode(analyzer, initialDate, severity):
             return m.size(me.getValue(numoffenses)['lstseverity'])
         return (numoffenses)
 
+def getAccidentsByDate(analyzer, Date):
+    
+    # offenses=om.get(analyzer['offenses'], )
+    accidentdate= om.get(analyzer['dateIndex'], Date)
+    # severity= om.get(analyzer, accidentdate['key'])
+    # print(accidentdate['key'])
+    # print(serveity['Severity'])
+    # if accidentdate['key'] is not None:
+    #     severitymap=me.getValue(accidentdate)['offenseIndex']
+    #     numaccidents= m.getValue(accidentdate)['severityIndex']
+    
+    #     if numaccidents is not None: 
+    #         return m.size(me.getValue(numaccidents['lstseverity']))
+    #     else:
+    #         return 0
+    return accidentdate
 
-def getAccidentsByState(analyzer,initialDate,finalDate): #REQUERIMIENTO 4
-    lst_rank= lt.newList(datastructure='SINGLE_LINKED',cmpfunction=None)
-    lst_keys= lt.newList(datastructure= 'SINGLE_LINKED',cmpfunction=None)
-    rango = getAccidentsByRange(analyzer['dateIndex'],initialDate,finalDate)
-    lt.addLast(lst_rank,rango)
-    histograma = m.newMap(numelements=1000,prime=109345121,maptype='CHAINING',loadfactor=0.5,comparefunction=compareaccidents)
-    iter = lit.newIterator(lst_rank)
+def getAccidentsByState(analyzer,initialDate,finalDate):
+    rango = om.values(initialDate,finalDate)
+    
+    histograma_estado = {'Estado':None,'accidents':None}
+    
+    histograma_fecha = {'Fecha':None,'accidents':None}
+    
+    iter = lit.newIterator(histograma_estado)
     while lit.hasNext(iter):
         entry = lit.next(iter)
-        if entry['State'] not in histograma:
-            entry['State'] = 1
+        if entry['State'] not in histograma_estado:
+            histograma_estado['Estado'] = 1
         else:
-            entry['State'] += 1
-    maximo = max(m.valueSet(lst_rank))
-    keys = m.keySet(lst_rank)
-    lt.addLast(lst_keys,keys)
-    iter = lit.newIterator(lst_keys)
+            histograma_estado['Estado'] += 1
+    
+    iter = lit.newIterator(histograma_fecha)
     while lit.hasNext(iter):
-        key = lit.next(iter)
-        if key == maximo:
-            return maximo
+        date = lit.next(iter)
+        if date['dateIndex'] not in histograma_fecha:
+            histograma_fecha['Fecha'] = 1
         else: 
-            return 0
-    #Paso 1: completar la lista 
-    #Paso 2: Crear un histograma(mapa)-> k:estados v:#accidentes
-    #Paso 3: Encontrar el valor mayor 
-    #Paso 4: Buscar la lista más grande de accidentes->fecha 
-    #Paso 5: Retornar el valor mayor del histograma y la fecha 
+            histograma_fecha['Fecha'] += 1
+
+    maximo_estado = max(histograma_estado.values)
+    llaves_estado = list(histograma_estado.keys)
+    iter = lit.newIterator(llaves_estado)
+    while lit.hasNext(iter):
+        state = lit.next(iter)
+        if histograma_estado[llaves_estado] == maximo_estado:
+            respuesta_estado = llaves_estado.index(maximo_estado)
+    
+    maximo_fecha = max(histograma_fecha.values)
+    llaves_fecha = list(histograma_fecha.keys)
+    iter = lit.newIterator(llaves_estado)
+    while lit.hasNext(iter):
+        fecha = lit.next(iter)
+        if histograma_fecha[llaves_fecha] == maximo_fecha:
+            respuesta_fecha = llaves_fecha.index(maximo_fecha)
+    
+    return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)\n
+            "La fecha con mayores accidentes es: "+str(respuesta_fecha))
+
+def getAccidentsBySeverity(analyzer, Date):
+
+    severityCodes=lt.newList(datastructure="SINGLE_LINKED", cmpfunction=None)
+    lt.addLast(severityCodes, 1)
+    lt.addLast(severityCodes, 2)
+    lt.addLast(severityCodes, 3)
+    lt.addLast(severityCodes, 4)
+
+    accidents=lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None)
+
+    for severityCode in severityCodes:
+        severity= getAccidentsByRangeCode(analyzer, Date, severityCode)
+        lt.addLast(accidents,severity)
+
+    return(accidents)
+
+def getAccidentsByHour(analyzer, initialhour, finalhour):¿
+    lst = om.values(analyzer['dateIndex'])
+    occurreddate = accident['Start_Time']
+    accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')
+    map_horas = om.newMap(omaptype='BST',comparefunction=compareHours)
+    om.put(map_horas,accidentdate.hour(),lst)
+    return om.values(map,initialhour,finalhour)
+   
 
 def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1 
 
@@ -250,6 +304,7 @@ def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1
 def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENTO 3
     accidentdate=getAccidentsByRange(analyzer, initialDate, finalDate)
     
+<<<<<<< HEAD
     i=0
     tamanio= lt.size(accidentdate)
     j=1
@@ -300,6 +355,11 @@ def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENT
     
     
     
+=======
+    iter=lit.newIterator(accidentdate)
+    while lit.hasNext(iter):
+        accidente= lit.next(iter)
+>>>>>>> 778f6f1d0d31727fec35f53167dc89cd96a6855a
 # ==============================
 # Funciones de Comparacion
 # ==============================
@@ -323,6 +383,14 @@ def compareDates(date1, date2):
     y entry una pareja llave-valor
     """
     if (date1 == date2):
+        return 0
+    elif (date1 > date2):
+        return 1
+    else:
+        return -1
+def compareHours(hour1,hour2):
+
+    if (hora1 == hora2):
         return 0
     elif (date1 > date2):
         return 1
