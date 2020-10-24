@@ -109,13 +109,16 @@ def getAccidentsByRangeCode(analyzer, initialDate,
     """
     initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
     return model.getAccidentsByRangeCode(analyzer, initialDate.date(),
-                                      offensecode)
+                                      severity)
 
-
-def getAccidentsBySeverity(analyzer, Date):
-    """
-    Retorna el total de crimenes en un rango de fechas
-    """
+def getAccidentsBySeverity (analyzer, Date): #REQUERIMIENTO 1
+    
     Date= datetime.datetime.strptime(Date, '%Y-%m-%d')
     return model.getAccidentsBySeverity(analyzer, Date.date())
 
+def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate):
+
+    initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
+    finalDate = datetime.datetime.strptime(finalDate, '%Y-%m-%d')
+    return model.getAccidentsByRangeSeverity(analyzer, initialDate.date(),
+                                  finalDate.date())
