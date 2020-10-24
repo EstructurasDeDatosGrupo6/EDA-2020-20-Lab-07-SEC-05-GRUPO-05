@@ -98,7 +98,6 @@ while True:
         
         print(resp)
 
-    
         
     else:
         sys.exit(0)

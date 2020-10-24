@@ -170,6 +170,7 @@ def getAccidentsByRange(analyzer, initialDate, finalDate):
     Retorna el numero de crimenes en un rago de fechas.
     """
     lst = om.values(analyzer['dateIndex'], initialDate, finalDate)
+    
     return lst
 
 
@@ -248,13 +249,47 @@ def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1
         
 def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate): #REQUERIMIENTO 3
     accidentdate=getAccidentsByRange(analyzer, initialDate, finalDate)
-    # print(type(accidentdate))
-    severidad1=lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None)    
     
-    iter=lit.newIterator(accidentdate)
-    while lit.hasNext(iter):
-        accidente= lit.next(iter)
+    i=0
+    tamanio= lt.size(accidentdate)
+    j=1
+    # print(accidentdate)
+    while i <tamanio:
+        fecha=(lt.getElement(accidentdate, i))
         
+        while j<=4:
+            if j==1:
+                severidad1= getAccidentsByRangeCode(analyzer, fecha, "1")
+                if severidad1==None:
+                    severidad1=0
+            if j==2:
+                severidad2=getAccidentsByRangeCode(analyzer, fecha, "2")
+                if severidad2==None:
+                    severidad2=0
+            if j==3:
+                severidad3=getAccidentsByRangeCode(analyzer, fecha, "3")
+                if severidad3==None:
+                    severidad3=0
+            if j==4:
+                severidad4=getAccidentsByRangeCode(analyzer,fecha, "4")
+                if severidad4==None:
+                    severidad4=0
+            
+            j+=1
+        i+=1 
+        TotalAccidentes=severidad1+severidad2+severidad3+severidad4   
+    
+
+  
+    print("\nRANGO FECHAS: " + str(initialDate)+ "- "+ str(finalDate))
+    print("SEVERIDAD"+"\t"+"NUM. ACCIDENTES")
+    print("--------------------------------------")
+    print("1"+"\t"+"\t"+str(severidad1))
+    print("2"+"\t"+"\t"+str(severidad2))
+    print("3"+"\t"+"\t"+str(severidad3))
+    print("4"+"\t"+"\t"+str(severidad4))
+    print("\nTOTAL DE ACCIDENTES:"+ str(TotalAccidentes))
+    
         
        
     
