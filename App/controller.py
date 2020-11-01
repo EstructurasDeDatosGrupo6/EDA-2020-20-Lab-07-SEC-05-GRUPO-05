@@ -123,6 +123,8 @@ def getAccidentsByRangeSeverity(analyzer, initialDate, finalDate):
     return model.getAccidentsByRangeSeverity(analyzer, initialDate.date(),
                                   finalDate.date())
 def getAccidentsByState(analyzer,initialDate,finalDate):
+    initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
+    finalDate = datetime.datetime.strptime(finalDate, '%Y-%m-%d')
     retorno = model.getAccidentsByState(analyzer,initialDate,finalDate)
     return retorno 
 def getAccidentsByHour(analyzer,initialHour,finalHour):

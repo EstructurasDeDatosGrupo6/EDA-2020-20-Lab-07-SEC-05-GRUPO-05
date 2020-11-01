@@ -189,7 +189,7 @@ def getAccidentsByRangeCode(analyzer, initialDate, severity):
 
 
 def getAccidentsByState(analyzer,initialDate,finalDate):
-    rango = om.values(initialDate,finalDate)
+    rango = om.values(analyzer,initialDate,finalDate)
     
     histograma_estado = {'Estado':None,'accidents':None}
     
@@ -216,7 +216,7 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
     iter = lit.newIterator(llaves_estado)
     while lit.hasNext(iter):
         state = lit.next(iter)
-        if histograma_estado[llaves_estado] == maximo_estado:
+        if histograma_estado[state] == maximo_estado:
             respuesta_estado = llaves_estado.index(maximo_estado)
     
     maximo_fecha = max(histograma_fecha.values)
@@ -224,7 +224,7 @@ def getAccidentsByState(analyzer,initialDate,finalDate):
     iter = lit.newIterator(llaves_estado)
     while lit.hasNext(iter):
         fecha = lit.next(iter)
-        if histograma_fecha[llaves_fecha] == maximo_fecha:
+        if histograma_fecha[fecha] == maximo_fecha:
             respuesta_fecha = llaves_fecha.index(maximo_fecha)
     
     return ("El estado con mayores accidentes en el rango dado es: "+str(respuesta_estado)+"\n"
@@ -248,14 +248,14 @@ def getAccidentsBySeverity(analyzer, Date):
 
 def getAccidentsByHour(analyzer, initialhour, finalhour):
     lst = om.values(analyzer['dateIndex'])
-    occurreddate = accident['Start_Time']
+    occurreddate = lst['Start_Time']
     accidentdate = datetime.datetime.strptime(occurreddate,'%H:%M:%S')
     map_horas = om.newMap(omaptype='BST',comparefunction=compareHours)
     om.put(map_horas,accidentdate.hour(),lst)
-    return om.values(map,initialhour,finalhour)
+    return om.values(map_horas,initialhour,finalhour)
    
 
-def getAccidentsBySeverity(analyzer, date): #REQUERIMIENTO 1 
+def getAccidentsBySeverity2(analyzer, date): #REQUERIMIENTO 1 
 
     accidentdate = om.get(analyzer['dateIndex'], date)
     severidad1=getAccidentsByRangeCode(analyzer, date, "1")
@@ -368,9 +368,9 @@ def compareDates(date1, date2):
         return -1
 def compareHours(hour1,hour2):
 
-    if (hora1 == hora2):
+    if (hour1 == hour2):
         return 0
-    elif (date1 > date2):
+    elif (hour1 > hour2):
         return 1
     else:
         return -1
